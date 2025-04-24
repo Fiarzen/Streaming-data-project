@@ -1,3 +1,6 @@
+"""
+Tests for the Guardian API client module using pytest.
+"""
 import pytest
 from unittest.mock import patch, MagicMock
 
@@ -39,7 +42,7 @@ def sample_response():
         }
     }
 
-@patch('guardian_api_client.requests.get')
+@patch('guardian_api_client.client.requests.get')
 def test_search_articles(mock_get, client, sample_response):
     """Test searching articles from the Guardian API."""
     # Configure mock

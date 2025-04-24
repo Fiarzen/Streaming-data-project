@@ -67,3 +67,37 @@ class GuardianApiClient:
         
         return response.json()
     
+    def process_articles(self, api_response: Dict) -> List[Dict]:
+        """
+        Process the API response and extract relevant article data.
+        
+        Args:
+            api_response: The JSON response from the Guardian API
+            
+        Returns:
+            List of dictionaries containing processed article data
+        """
+        try:
+            results = api_response.get("response", {}).get("results", [])
+            processed_articles = []
+            
+            for article in results:
+                # Extract required fields
+                processed_article = {
+                    "webPublicationDate": article.get("webPublicationDate"),
+                    "webTitle": article.get("webTitle"),
+                    "webUrl": article.get("webUrl")
+                }
+                
+                # Add content preview if available
+                fields = article.get("fields", {})
+                if fields and "bodyText" in fields:
+                    body_text = fields["bodyText"]
+                    processed_article["contentPreview"] = body_text[:1000] if body_text else None
+                    
+                processed_articles.append(processed_article)
+                
+            return processed_articles
+        except Exception as e:
+            logger.error(f"Error processing articles: {str(e)}")
+            raise

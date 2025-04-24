@@ -2,10 +2,14 @@
 An application to retrieve
 articles from the Guardian API and publish it to a message broker so that it
 can be consumed and analysed by other applications.
+
 The tool will accept a search term (e.g. "machine learning"), an optional
-"date_from" field, and a reference to a message broker. It will use the search
-terms to search for articles in the Guardian API. It will then post details of up
+"date_from" field, and a reference to a message broker. 
+It will use the search
+terms to search for articles in the Guardian API. 
+It will then post details of up
 to ten hits to the message broker.
+
 For example, given the inputs:
 • "machine learning"
 • "date_from=2023-01-01"

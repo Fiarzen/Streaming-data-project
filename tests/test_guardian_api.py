@@ -61,3 +61,16 @@ def test_search_articles(mock_get, client, sample_response):
     assert call_args['api-key'] == "test-api-key"
     assert call_args['from-date'] == "2023-01-01"
 
+def test_process_articles(client, sample_response):
+    """Test processing article data from API response."""
+    # Call method
+    result = client.process_articles(sample_response)
+    
+    # Verify
+    assert len(result) == 2
+    assert result[0]['webTitle'] == "Test Article 1"
+    assert result[1]['webTitle'] == "Test Article 2"
+    
+    # Check content preview truncation
+    assert len(result[0]['contentPreview']) <= 1000
+    assert 'contentPreview' in result[0]

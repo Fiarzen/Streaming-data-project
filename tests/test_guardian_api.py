@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 
-from guardian_api import GuardianApiClient
+from src.guardian_api_client import GuardianApiClient
 
 @pytest.fixture
 def client():

@@ -1,8 +1,4 @@
-"""
-Guardian API Client
 
-A module for retrieving articles from the Guardian API and publishing them to a message broker.
-"""
 import os
 import json
 import logging
@@ -101,3 +97,29 @@ class GuardianApiClient:
         except Exception as e:
             logger.error(f"Error processing articles: {str(e)}")
             raise
+
+    def publish_to_sns(self, topic_arn: str, articles: List[Dict]) -> Dict:
+        """
+        Publish articles to an SNS topic.
+        
+        Args:
+            topic_arn: The ARN of the SNS topic
+            articles: List of article data to publish
+            
+        Returns:
+            Dict containing the SNS publish response
+        """
+        message = json.dumps(articles)
+        logger.info(f"Publishing {len(articles)} articles to SNS topic: {topic_arn}")
+        
+        response = self.sns_client.publish(
+            TopicArn=topic_arn,
+            Message=message,
+            MessageAttributes={
+                'TTL': {
+                    'DataType': 'Number',
+                    'StringValue': '259200'  # 3 days in seconds
+                }
+            }
+        )
+        return response    

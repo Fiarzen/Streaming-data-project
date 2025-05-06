@@ -50,7 +50,7 @@ class GuardianApiClient:
             requests.RequestException: If the API request fails
         """
         params = {
-            "q": search_term,
+            "q": f'"{search_term}"',
             "api-key": self.api_key,
             "page-size": page_size,
             "show-fields": show_fields,

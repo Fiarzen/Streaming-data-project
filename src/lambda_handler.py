@@ -11,8 +11,6 @@ from typing import Dict, Any
 
 from guardian_api_client import GuardianApiClient
 
-
-# Configure logging
 logger = logging.getLogger()
 logger.setLevel("INFO")
 
@@ -46,7 +44,6 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 "body": json.dumps({"error": "broker_reference is required"}),
             }
 
-        # Initialize the client and publish articles
         client = GuardianApiClient()
         result = client.publish_articles(search_term, broker_reference, date_from)
 

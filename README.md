@@ -19,9 +19,9 @@ message broker with the ID "guardian_content".
 
 ## Configuration
 
-Create a .env file with GUARDIAN_API_KEY="your guardian api key"
+Create a .env file with GUARDIAN_API_KEY="your guardian api key".
 
-run make requirements to install requirements in a venv
+Run make requirements to install requirements in a venv.
 
 ### Basic Usage
 the example_script.py file can be run to test the application in the command line by typing from the root directory:

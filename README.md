@@ -21,6 +21,8 @@ message broker with the ID "guardian_content".
 
 Create a .env file with GUARDIAN_API_KEY="your guardian api key"
 
+run make requirements to install requirements in a venv
+
 ## AWS Credentials
 
 To publish messages to AWS services, you need to configure AWS credentials. The library uses boto3, which looks for credentials in the standard locations:
@@ -50,7 +52,7 @@ print(result)
 
 ### AWS Lambda Function
 
-The package includes a Lambda handler that can be used in AWS Lambda, along with a terraform file that can be used to test the functionality
+The package includes a Lambda handler that can be used in AWS Lambda, along with a terraform file that can be used to test the functionality(see bottom of readme for more info)
 
 ## API Reference
 
@@ -102,22 +104,6 @@ The articles are published to the message broker in the following JSON format:
 ]
 ```
 
-## Development
-
-### Setup Development Environment
-
-```bash
-# Clone the repository
-git clone https://github.com/fiarzen/de-streaming-data-project.git
-cd de-streaming-data-project
-
-# Create a virtual environment
-python -m venv venv
-source venv/bin/activate  
-
-# Install development dependencies
-pip install -e ".[dev]"
-```
 
 ### Run Tests
 
@@ -125,11 +111,8 @@ pip install -e ".[dev]"
 # Run all tests
 pytest
 
-# Run with coverage report
-pytest --cov=guardian_api_client
-
 # Run specific test file
-pytest tests/test_guardian_api_client.py
+pytest tests/test_client.py
 ```
 
 
@@ -145,5 +128,3 @@ pip install safety
 # Run security check
 safety scan
 ```
-
-## License

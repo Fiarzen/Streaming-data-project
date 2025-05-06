@@ -111,8 +111,6 @@ The package includes a Lambda handler that can be used in AWS Lambda, along with
 # Run all tests
 pytest tests
 
-
-
 ### Security Scanning
 
 To scan for security vulnerabilities:

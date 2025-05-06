@@ -8,7 +8,7 @@ import json
 import logging
 from typing import Dict, Any
 
-from guardian_api_client import GuardianApiClient
+from src.guardian_api_client import GuardianApiClient
 
 # Configure logging
 logger = logging.getLogger()
@@ -64,3 +64,4 @@ def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         return {
             "statusCode": 500,
             "body": json.dumps({"error": f"An unexpected error occurred: {str(e)}"})
+        }

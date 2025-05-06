@@ -98,7 +98,6 @@ def test_publish_articles_sns(
     mock_publish_sns, mock_process, mock_search, client, sample_response
 ):
     """Test publishing articles to SNS."""
-    # Configure mocks
     mock_search.return_value = sample_response
     mock_process.return_value = [
         {
@@ -110,12 +109,10 @@ def test_publish_articles_sns(
     ]
     mock_publish_sns.return_value = {"MessageId": "test-message-id"}
 
-    # Call method
     result = client.publish_articles(
         "test term", "arn:aws:sns:us-east-1:123456789012:topic-name", "2023-01-01"
     )
 
-    # Verify
     mock_search.assert_called_once()
     mock_process.assert_called_once()
     mock_publish_sns.assert_called_once()

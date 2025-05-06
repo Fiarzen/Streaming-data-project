@@ -2,7 +2,7 @@
 
 terraform {
   backend "s3" {
-    bucket                   = "tf-state-bucket-2025-jeremy-de-streaming-data-project"
+    bucket                   = "tf-state-jeremy-de-streaming-data-project"
     key                      = "jeremy-streaming-data-project"
     region                   = "eu-west-2"
     shared_credentials_files = ["~/.aws/credentials"]

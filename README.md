@@ -16,23 +16,10 @@ For example, given the inputs:
 post up to the ten most recent items in JSON format onto the
 message broker with the ID "guardian_content".
 
-## Installation
-
-```bash
-pip install guardian-api-client
-```
 
 ## Configuration
 
-The library requires a valid Guardian API key. You can obtain one for free from the [Guardian Open Platform](https://open-platform.theguardian.com/).
-
-Set your API key as an environment variable:
-
-```bash
-export GUARDIAN_API_KEY=your-api-key-here
-```
-
-Alternatively, you can provide the API key directly when initializing the client.
+Create a .env file with GUARDIAN_API_KEY="your guardian api key"
 
 ## AWS Credentials
 
@@ -81,8 +68,6 @@ from lambda_handler import lambda_handler
 
 ### GuardianApiClient
 
-#### `__init__(api_key=None)`
-Initialize the client with an optional API key. If not provided, the key will be read from the `GUARDIAN_API_KEY` environment variable.
 
 #### `search_articles(search_term, date_from=None, page_size=10, show_fields="bodyText")`
 Search for articles in the Guardian API.

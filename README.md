@@ -34,7 +34,6 @@ client = GuardianApiClient()
 # Search and publish articles
 result = client.publish_articles(
     search_term="machine learning",
-    broker_reference="arn:aws:sns:us-east-1:123456789012:guardian_content",
     date_from="2023-01-01"
 )
 
@@ -42,12 +41,6 @@ print(result)
 ```
 the example_script.py file can be run to test the application in the command line
 
-## AWS Credentials
-
-To publish messages to AWS services, you need to configure AWS credentials. The library uses boto3, which looks for credentials in the standard locations:
-- Environment variables
-- Shared credential file (~/.aws/credentials)
-- AWS IAM role for EC2/Lambda
 
 ### GuardianApiClient
 
@@ -96,7 +89,12 @@ The articles are published to the message broker in the following JSON format:
   ...
 ]
 ```
+## AWS Credentials
 
+To publish messages to AWS services, you need to configure AWS credentials. The library uses boto3, which looks for credentials in the standard locations:
+- Environment variables
+- Shared credential file (~/.aws/credentials)
+- AWS IAM role for EC2/Lambda
 
 ### AWS Lambda Function
 

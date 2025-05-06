@@ -174,3 +174,21 @@ def test_invalid_date_format(client):
         client.publish_articles(
             "test term", "arn:aws:sns:us-east-1:123:topic", "01-01-2023"
         )
+
+def test_publish_articles_invalid_date(client):
+    with pytest.raises(ValueError):
+        client.publish_articles("test", "some-ref", date_from="01-01-2020")
+
+def test_publish_articles_missing_term(client):
+    with pytest.raises(ValueError):
+        client.publish_articles("", "some-ref")
+
+
+def test_publish_articles_unknown_broker(client):
+    with patch.object(client, "search_articles") as mock_search:
+        mock_search.return_value = {"response": {"results": []}}
+
+        with pytest.raises(ValueError) as excinfo:
+            client.publish_articles("test", "not-a-valid-broker")
+        
+        assert "Unknown broker type" in str(excinfo.value)

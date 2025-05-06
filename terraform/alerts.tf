@@ -1,26 +1,6 @@
-resource "aws_sns_topic" "state_machine_alerts" {
-    name = "state_machine_alerts"
-}
 
 resource "aws_sns_topic" "lambda_alerts" {
     name = "lambda_alerts"
-}
-
-resource "aws_sns_topic_subscription" "email_subscription_state_machine" {
-    topic_arn = aws_sns_topic.state_machine_alerts.arn
-    protocol = "email"
-    endpoint = "jeremylam1995@gmail.com"
-}
-
-resource "aws_sns_topic_subscription" "email_subscription_lambda" {
-    topic_arn = aws_sns_topic.lambda_alerts.arn
-    protocol = "email"
-    endpoint = "jeremylam1995@gmail.com"
-}
-
-resource "aws_cloudwatch_log_group" "sfn_log_group" {
-  name              = "/aws/states/totes_state_machine"
-  retention_in_days = 7
 }
 
 resource "aws_cloudwatch_metric_alarm" "lambda_alarm" {

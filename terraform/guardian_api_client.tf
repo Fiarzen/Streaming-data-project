@@ -1,9 +1,9 @@
-data "archive_file" "extract_lambda" {
+data "archive_file" "guardian_api_client" {
   type        = "zip"
-  output_path = "${path.module}/../packages/extract_lambda/function.zip"
-  source_dir = "${path.module}/../src/extract_lambda"
+  output_path = "${path.module}/../packages/guardian_api_client/function.zip"
+  source_dir = "${path.module}/../src"
 }
-resource "aws_lambda_function" "workflow_tasks_extract" {
+resource "aws_lambda_function" "guardian_api_client" {
   function_name    = var.extract_lambda
   source_code_hash = data.archive_file.extract_lambda.output_base64sha256
   s3_bucket        = aws_s3_bucket.code_bucket.bucket
@@ -15,12 +15,8 @@ resource "aws_lambda_function" "workflow_tasks_extract" {
   layers           = [aws_lambda_layer_version.dependencies.arn]
   environment {
     variables = {
-      SECRETS_ARN = aws_secretsmanager_secret.db_credentials.arn
-      USER = local.db_credentials["user"]
-      PASSWORD = local.db_credentials["password"]
-      HOST = local.db_credentials["host"]
-      DATABASE = local.db_credentials["database"]
-      PORT = local.db_credentials["port"]
+      SECRETS_ARN = aws_secretsmanager_secret.api_credentials.arn
+      GUARDIAN_API_KEY = local.api_credentials
     }
   }
   depends_on = [aws_s3_object.lambda_code, aws_s3_object.lambda_layer]

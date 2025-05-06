@@ -78,14 +78,14 @@ class GuardianApiClient:
             processed_articles = []
             
             for article in results:
-                # Extract required fields
+
                 processed_article = {
                     "webPublicationDate": article.get("webPublicationDate"),
                     "webTitle": article.get("webTitle"),
                     "webUrl": article.get("webUrl")
                 }
                 
-                # Add content preview if available
+
                 fields = article.get("fields", {})
                 if fields and "bodyText" in fields:
                     body_text = fields["bodyText"]
@@ -185,24 +185,23 @@ class GuardianApiClient:
         Raises:
             ValueError: If the broker type is unknown
         """
-        # Validate inputs
         if not search_term:
             raise ValueError("Search term is required")
         if not broker_reference:
             raise ValueError("Broker reference is required")
             
-        # Validate date_from format if provided
+
         if date_from:
             try:
                 datetime.strptime(date_from, "%Y-%m-%d")
             except ValueError:
                 raise ValueError("Invalid date_from format. Use YYYY-MM-DD")
         
-        # Get articles from the Guardian API
+
         api_response = self.search_articles(search_term, date_from)
         articles = self.process_articles(api_response)
         
-        # Determine broker type and publish
+
         broker_type = self.determine_broker_type(broker_reference)
         
         if broker_type == "sns":

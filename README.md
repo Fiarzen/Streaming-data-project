@@ -24,14 +24,16 @@ Create a .env file with GUARDIAN_API_KEY="your guardian api key"
 run make requirements to install requirements in a venv
 
 ### Basic Usage
+the example_script.py file can be run to test the application in the command line by typing from the root directory:
 
+python example_script.py 
+
+or for example:
 ```python
 from guardian_api_client import GuardianApiClient
 
-# Initialize the client
 client = GuardianApiClient()
 
-# Search and publish articles
 result = client.publish_articles(
     search_term="machine learning",
     date_from="2023-01-01"
@@ -39,7 +41,7 @@ result = client.publish_articles(
 
 print(result)
 ```
-the example_script.py file can be run to test the application in the command line
+
 
 
 ### GuardianApiClient

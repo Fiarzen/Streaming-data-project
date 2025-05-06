@@ -24,23 +24,6 @@ resource "aws_iam_role" "lambda_role" {
 
 
 
-resource "aws_iam_role_policy" "allow_sns_publish" {
-  name = "allow-publish-to-guardian-content"
-  role = aws_iam_role.lambda_role.name
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = "sns:Publish",
-        Resource = "arn:aws:sns:eu-west-2:289831833467:guardian_content"
-      }
-    ]
-  })
-}
-
-
 resource "aws_iam_policy" "lambda_logging" {
   name = "lambda-logging"
   policy = <<EOF

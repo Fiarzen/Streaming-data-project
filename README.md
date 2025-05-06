@@ -128,3 +128,7 @@ pip install safety
 # Run security check
 safety scan
 ```
+
+### Terraform example test
+
+If you wish to test the application using terraform to create a lambda function with the application that sends data to an sqs message broker, configure the backend.tf file to a suitable tf state bucket name and region. Additionally, you will need to run make layer-requirements as well as creating an "api_credentials.json" file in the root directory in the form of {"guardian_api_key" :  "your_key_here"}.

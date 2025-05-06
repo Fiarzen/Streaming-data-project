@@ -1,7 +1,3 @@
-"""
-Tests for the Guardian API client module using pytest.
-"""
-
 import pytest
 from unittest.mock import patch, MagicMock
 

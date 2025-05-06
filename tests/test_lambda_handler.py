@@ -1,6 +1,3 @@
-"""
-Tests for the Lambda handler using pytest.
-"""
 
 import json
 import pytest
@@ -9,9 +6,6 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 from src.lambda_handler import lambda_handler
-
-
-
 
 
 @pytest.fixture
@@ -134,16 +128,14 @@ def test_unexpected_error(mock_client_class, valid_event):
     assert "error" in response_body
     assert "Unexpected error" in response_body["error"]
 
+
 @patch("src.lambda_handler.GuardianApiClient")
 def test_lambda_handler_invalid_broker(mock_client_class):
     mock_client = MagicMock()
     mock_client.publish_articles.side_effect = ValueError("Unknown broker type")
     mock_client_class.return_value = mock_client
 
-    event = {
-        "search_term": "data",
-        "broker_reference": "ftp://some-random-broker"
-    }
+    event = {"search_term": "data", "broker_reference": "ftp://some-random-broker"}
 
     result = lambda_handler(event, context={})
 

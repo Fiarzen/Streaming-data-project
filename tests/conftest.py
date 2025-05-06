@@ -1,7 +1,3 @@
-"""
-Configuration file for pytest.
-"""
-
 import pytest
 import os
 from unittest.mock import patch

@@ -23,15 +23,6 @@ Create a .env file with GUARDIAN_API_KEY="your guardian api key"
 
 run make requirements to install requirements in a venv
 
-## AWS Credentials
-
-To publish messages to AWS services, you need to configure AWS credentials. The library uses boto3, which looks for credentials in the standard locations:
-- Environment variables
-- Shared credential file (~/.aws/credentials)
-- AWS IAM role for EC2/Lambda
-
-## Usage
-
 ### Basic Usage
 
 ```python
@@ -49,12 +40,14 @@ result = client.publish_articles(
 
 print(result)
 ```
+the example_script.py file can be run to test the application in the command line
 
-### AWS Lambda Function
+## AWS Credentials
 
-The package includes a Lambda handler that can be used in AWS Lambda, along with a terraform file that can be used to test the functionality(see bottom of readme for more info)
-
-## API Reference
+To publish messages to AWS services, you need to configure AWS credentials. The library uses boto3, which looks for credentials in the standard locations:
+- Environment variables
+- Shared credential file (~/.aws/credentials)
+- AWS IAM role for EC2/Lambda
 
 ### GuardianApiClient
 
@@ -105,6 +98,13 @@ The articles are published to the message broker in the following JSON format:
 ```
 
 
+### AWS Lambda Function
+
+The package includes a Lambda handler that can be used in AWS Lambda, along with a terraform file that can be used to test the functionality(see bottom of readme for more info)
+
+
+
+
 ### Run Tests
 
 ```bash
@@ -129,6 +129,6 @@ pip install safety
 safety scan
 ```
 
-### Terraform example test
+### Terraform files
 
 If you wish to test the application using terraform to create a lambda function with the application that sends data to an sqs message broker, configure the backend.tf file to a suitable tf state bucket name and region. Additionally, you will need to run make layer-requirements as well as creating an "api_credentials.json" file in the root directory in the form of {"guardian_api_key" :  "your_key_here"}.

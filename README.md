@@ -50,19 +50,7 @@ print(result)
 
 ### AWS Lambda Function
 
-The package includes a Lambda handler that can be used in AWS Lambda:
-
-```python
-# lambda_function.py
-from lambda_handler import lambda_handler
-
-# Lambda function will be invoked with event containing:
-# {
-#     "search_term": "machine learning",
-#     "date_from": "2023-01-01",
-#     "broker_reference": "arn:aws:sns:us-east-1:123456789012:guardian_content"
-# }
-```
+The package includes a Lambda handler that can be used in AWS Lambda, along with a terraform file that can be used to test the functionality
 
 ## API Reference
 
@@ -93,7 +81,7 @@ Search for articles and publish them to the specified message broker.
 
 - **Parameters:**
   - `search_term`: The term to search for
-  - `broker_reference`: Reference to the message broker (SNS ARN or SQS URL)
+  - `broker_reference`: Reference to the message broker (SQS URL)
   - `date_from`: Optional date to filter results from (YYYY-MM-DD format)
 
 - **Returns:** Dict containing information about the operation
@@ -155,7 +143,7 @@ To scan for security vulnerabilities:
 pip install safety
 
 # Run security check
-safety check
+safety scan
 ```
 
 ## License

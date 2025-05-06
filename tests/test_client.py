@@ -64,7 +64,7 @@ def test_search_articles(mock_get, client, sample_response):
 
     # Check correct parameters were used
     call_args = mock_get.call_args[1]["params"]
-    assert call_args["q"] == "test term"
+    assert call_args["q"] == '"test term"'
     assert call_args["api-key"] == "test-api-key"
     assert call_args["from-date"] == "2023-01-01"
 

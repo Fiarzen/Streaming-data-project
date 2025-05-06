@@ -123,3 +123,103 @@ class GuardianApiClient:
             }
         )
         return response    
+
+    def publish_to_sqs(self, queue_url: str, articles: List[Dict]) -> Dict:
+        """
+        Publish articles to an SQS queue.
+        
+        Args:
+            queue_url: The URL of the SQS queue
+            articles: List of article data to publish
+            
+        Returns:
+            Dict containing the SQS send message response
+        """
+        message = json.dumps(articles)
+        logger.info(f"Publishing {len(articles)} articles to SQS queue: {queue_url}")
+        
+        response = self.sqs_client.send_message(
+            QueueUrl=queue_url,
+            MessageBody=message,
+            MessageAttributes={
+                'TTL': {
+                    'DataType': 'Number',
+                    'StringValue': '259200'  # 3 days in seconds
+                }
+            }
+        )
+        return response
+    
+    def determine_broker_type(self, broker_reference: str) -> str:
+        """
+        Determine the type of message broker from the reference.
+        
+        Args:
+            broker_reference: Reference to the message broker
+            
+        Returns:
+            String indicating the broker type ('sns', 'sqs', or 'unknown')
+        """
+        if broker_reference.startswith("arn:aws:sns:"):
+            return "sns"
+        elif broker_reference.startswith("https://sqs.") or broker_reference.startswith("http://sqs."):
+            return "sqs"
+        else:
+            return "unknown"
+    
+    def publish_articles(self, 
+                        search_term: str, 
+                        broker_reference: str, 
+                        date_from: Optional[str] = None) -> Dict:
+        """
+        Search for articles and publish them to the specified message broker.
+        
+        Args:
+            search_term: The term to search for
+            broker_reference: Reference to the message broker (SNS ARN or SQS URL)
+            date_from: Optional date to filter results from (YYYY-MM-DD format)
+            
+        Returns:
+            Dict containing information about the operation
+            
+        Raises:
+            ValueError: If the broker type is unknown
+        """
+        # Validate inputs
+        if not search_term:
+            raise ValueError("Search term is required")
+        if not broker_reference:
+            raise ValueError("Broker reference is required")
+            
+        # Validate date_from format if provided
+        if date_from:
+            try:
+                datetime.strptime(date_from, "%Y-%m-%d")
+            except ValueError:
+                raise ValueError("Invalid date_from format. Use YYYY-MM-DD")
+        
+        # Get articles from the Guardian API
+        api_response = self.search_articles(search_term, date_from)
+        articles = self.process_articles(api_response)
+        
+        # Determine broker type and publish
+        broker_type = self.determine_broker_type(broker_reference)
+        
+        if broker_type == "sns":
+            publish_response = self.publish_to_sns(broker_reference, articles)
+            return {
+                "status": "success",
+                "broker_type": "sns",
+                "articles_count": len(articles),
+                "message_id": publish_response.get("MessageId")
+            }
+        elif broker_type == "sqs":
+            publish_response = self.publish_to_sqs(broker_reference, articles)
+            return {
+                "status": "success",
+                "broker_type": "sqs",
+                "articles_count": len(articles),
+                "message_id": publish_response.get("MessageId")
+            }
+        else:
+            raise ValueError(f"Unknown broker type for reference: {broker_reference}")

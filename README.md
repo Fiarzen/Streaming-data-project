@@ -109,11 +109,7 @@ The package includes a Lambda handler that can be used in AWS Lambda, along with
 
 ```bash
 # Run all tests
-pytest
-
-# Run specific test file
-pytest tests/test_client.py
-```
+pytest tests
 
 
 

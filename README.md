@@ -16,8 +16,8 @@ For example, given the inputs:
 post up to the ten most recent items in JSON format onto the
 message broker with the ID "guardian_content".
 
-![alt text][diagram]
-[diagram]: https://github.com/fiarzen/Streaming-data-project/pic02.jpg
+![alt text](https://github.com/Fiarzen/Streaming-data-project/pic02.jpg "Diagram")
+
 
 ## Configuration
 
